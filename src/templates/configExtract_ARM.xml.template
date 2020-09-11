@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<!DOCTYPE CONFIGURATION SYSTEM "config.dtd"> 
+
+<CONFIGURATION>
+
+<TARGET NAME="ARM" ENDIANNESS="SELECTED_ENDIANNESS"/>
+
+<!-- Compiler toolchain -->
+<!-- ****************** -->
+
+<!-- Preprocessor -->
+<PREPROCESSOR NAME="_CROSS_COMPILER_DIR_/bin/arm-none-eabi-cpp" OPT="-D=ARM_ARCHI -I. -I.."/>
+<!-- Compiler (options -c -S are automatically put to generate assembly code) -->
+<!-- Option -ggdb should be used if html output of critical path is asked for in subsequent WCET estimation -->
+<COMPILER NAME="_CROSS_COMPILER_DIR_/bin/arm-none-eabi-gcc"  OPT="-mcpu=arm7tdmi -march=armv4t -marm -fomit-frame-pointer -O0 -ggdb"/>
+
+<!-- Assembler -->
+<ASSEMBLER NAME="_CROSS_COMPILER_DIR_/bin/arm-none-eabi-as" OPT=""/>
+<!-- Linker (option -T script is automatically set when SCRIPT is specified) -->
+<!-- testé avec -nostdlib -nodefaultlibs  -->
+<LINKER NAME="_CROSS_COMPILER_DIR_/bin/arm-none-eabi-ld" OPT=" " SCRIPT=""/>
+<!-- Objdump (called with options -t -d -z ) -->
+<OBJDUMP NAME="_CROSS_COMPILER_DIR_/bin/arm-none-eabi-objdump" OPT=""/>
+<!-- Readelf (called with option -S) -->
+<READELF NAME="_CROSS_COMPILER_DIR_/bin/arm-none-eabi-readelf" OPT=""/>
+
+<!-- Directories of inputs, temporaries and outputs (default values . /tmp and .) -->
+<!-- **************************************************************************** -->
+<INPUTDIR NAME="."/>
+<TMPDIR NAME="/tmp"/>
+<RESULTDIR NAME="."/>
+
+<!-- Program parameters -->
+<!-- ****************** -->
+
+<!-- NAME: program name, used as a file name prefix when generating outputs in RESULTDIR -->
+<!-- SOURCEFILE NAME: source file name (merged with INPUTDIR to load file) -->
+<!-- SOURCEFILE TYPE: C/ASM/BINARY -->
+<!-- ANNOTATIONFILE: input file defining the loop bounds, required for BINARY or ASM files only. Example: ANNOTATIONFILE="annot.xml" ).-->
+<!-- Several C files are accepted, but not for BINARY/ASM types. -->
+
+<PROGRAM NAME = "X_BENCH" ENTRYPOINT = "main" >
+  <SOURCEFILE NAME="X_BENCH.c" TYPE="C" />
+</PROGRAM>
+
+</CONFIGURATION>

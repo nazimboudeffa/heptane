@@ -1,0 +1,14 @@
+cfglib : A library for CFG manipulation in WCET analysis
+======================================================
+
+This work was made at the IRISA research center which aims at a simple
+CFG manipulation library usable by various static program analysis.
+
+In this directory you have the library itself (folder `src` and
+`include`). For compilation do: 
+
+	modify DESTDIR in file GNUmakefile to specify where the library should be installed
+        make && make install
+
+Fot more details, look at index.html on directory doc
+

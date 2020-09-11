@@ -1,0 +1,37 @@
+
+TODO (decreasing priority)
+--------------------------
+
+- check Helper class for unused code
+
+- Write a small tutorial, or at least provision of simple example
+  programs: serialise/unserialise a CFG, scan of the CFG structure
+  (BasicBlocks, Function Calls), addition of new attributes and
+  associated serialisation functions.  Document method setAttribute:
+  makes a copy of the attribute or simply stores the pointer? Document
+  how to attach unserialisable attributes.
+
+DONE (since François left, end of august)
+-----------------------------------------
+
+- added a method in class Loop to get all nodes but those
+  embedded in subloops
+- added a "very long int" attribute (will be required to attach
+  timing information to nodes/CFGs/BBs and generate identifiers)
+- changed memory management to make copies of attributes instead of
+  passing pointers
+- added new utility functions to Nodes/Instructions
+- removed memory leaks (attribute management, use of libxml2)
+- naming of attribute types: Integer=>IntegerAttribute. Same for the
+  other attributes
+- serialize ids of end nodes
+- added loop annotations
+- switched to libxml2 instead of libxml++2.6
+- corrected Instruction class such that instructions can now have
+  attributes (the IO code was missing)
+- creation of "external CFGs" for unknown functions (ex: library
+  functions). When the callee does not have a Cfg, create an empty one
+  with field "external" set
+- addition of an Address attribute
+- modification of the status of Call nodes. Now call nodes have
+  the same methods than BB and is not an "abstract" call node

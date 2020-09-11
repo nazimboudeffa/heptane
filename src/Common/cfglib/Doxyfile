@@ -1,0 +1,13 @@
+
+@INCLUDE_PATH = ../..
+@INCLUDE = Doxyfile.common
+
+PROJECT_NAME           = "cfglib"
+OUTPUT_DIRECTORY       = doc/generated-doc
+
+INPUT  = src include doc
+
+FILE_PATTERNS = *.h *.dox
+
+
+

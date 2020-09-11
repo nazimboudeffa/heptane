@@ -1,0 +1,19 @@
+cfglib (control flow graph management library):
+	François Joulaud <fjoulaud@irisa.fr>
+	Isabelle Puaut <puaut@irisa.fr>
+
+Heptane software architecture + rest of code unless explicit mention:
+	Damien Hardy <damien.hardy@irisa.fr>
+	Isabelle Puaut <puaut@irisa.fr>
+
+Instruction cache analysis:
+	Damien Hardy <damien.hardy@irisa.fr>
+
+Data cache analysis:
+     	Benjamin Lesage <Benjamin.Lesage@irisa.fr>
+
+Pipeline analysis, html output
+	Thomas Piquet <Thomas.Piquet@irisa.fr>
+
+Arm port:
+	Nicolas Kiss <Nicolas.Kiss@irisa.fr>

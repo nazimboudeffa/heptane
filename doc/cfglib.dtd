@@ -1,0 +1,73 @@
+<!-- *************************************************************
+Format of the cfglib XML files
+************************************************************** -->
+
+<!ELEMENT PROGRAM (CFG*)>
+<!ATTLIST PROGRAM id NMTOKEN #REQUIRED>
+<!ATTLIST PROGRAM name CDATA #REQUIRED>
+<!ATTLIST PROGRAM entry NMTOKEN #REQUIRED>
+
+<!ELEMENT CFG (NODE*, EDGE*, LOOP*, ATTRS_LIST*)>
+<!ATTLIST CFG id NMTOKEN #REQUIRED>
+<!ATTLIST CFG name CDATA #REQUIRED>
+<!ATTLIST CFG startnode CDATA #REQUIRED>
+<!ATTLIST CFG endnodes CDATA #REQUIRED>
+
+<!ELEMENT NODE (INSTRUCTION*, ATTRS_LIST*)>
+<!ATTLIST NODE id NMTOKEN #REQUIRED>
+<!ATTLIST NODE type (BasicBlock | Call) #REQUIRED>
+
+<!ELEMENT EDGE (ATTRS_LIST*)>
+<!ATTLIST EDGE id NMTOKEN #REQUIRED>
+<!ATTLIST EDGE origin NMTOKEN #REQUIRED>
+<!ATTLIST EDGE destination NMTOKEN #REQUIRED>
+
+<!ELEMENT LOOP (ATTRS_LIST*)>
+<!ATTLIST LOOP id NMTOKEN #REQUIRED>
+<!ATTLIST LOOP head NMTOKEN #REQUIRED>
+<!ATTLIST LOOP nodes CDATA #REQUIRED>
+<!ATTLIST LOOP backedges CDATA #REQUIRED>
+
+<!ELEMENT INSTRUCTION (ATTRS_LIST*)>
+<!ATTLIST INSTRUCTION id NMTOKEN #REQUIRED>
+<!ATTLIST INSTRUCTION asm_type (Label | Directive | Code | Other) #REQUIRED>
+<!ATTLIST INSTRUCTION code CDATA #REQUIRED>
+
+<!ELEMENT ATTRS_LIST (ATTR*)>
+
+<!-- **********************************************
+      Attributes (modify the file to check
+      the validity of your files containing added
+      attributes
+*************************************************** -->
+
+
+<!ELEMENT ATTR (ACCES*|SP)>
+<!ATTLIST ATTR type CDATA #REQUIRED>
+<!ATTLIST ATTR name CDATA #REQUIRED>
+<!ATTLIST ATTR value CDATA #IMPLIED>
+
+<!-- ******* Other attribute tags, add new tags if required ************** -->
+
+<!ATTLIST ATTR sizeframewithcaller NMTOKEN #IMPLIED>
+<!ATTLIST ATTR sizeframewithoutcaller NMTOKEN #IMPLIED>
+
+<!-- ******* Attribute output by the data address analyser *************** -->
+
+<!ELEMENT ACCES (ADRSIZE)>
+<!ATTLIST ACCES type CDATA #REQUIRED>
+<!ATTLIST ACCES seg CDATA #REQUIRED>
+<!ATTLIST ACCES varname CDATA #REQUIRED>
+<!ATTLIST ACCES memoryByteAcceded NMTOKEN #REQUIRED>
+
+<!ELEMENT ADRSIZE EMPTY>
+<!ATTLIST ADRSIZE begin NMTOKEN #REQUIRED>
+<!ATTLIST ADRSIZE size NMTOKEN #REQUIRED>
+
+<!ELEMENT SP (CALLCONTEXT*)>
+<!ATTLIST SP value NMTOKEN #REQUIRED>
+
+<!ELEMENT CALLCONTEXT EMPTY>
+<!ATTLIST CALLCONTEXT value CDATA #REQUIRED>
+
+

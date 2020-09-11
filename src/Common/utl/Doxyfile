@@ -1,0 +1,11 @@
+
+@INCLUDE_PATH = ../..
+@INCLUDE = Doxyfile.common
+
+PROJECT_NAME           = "Common-utl"
+OUTPUT_DIRECTORY       = doc/generated-doc
+
+INPUT  = src doc
+
+FILE_PATTERNS = *.h *.dox
+

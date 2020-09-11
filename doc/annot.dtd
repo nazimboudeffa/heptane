@@ -1,0 +1,19 @@
+<!-- *************************************************************
+Format of the WCET analysis annotation files
+************************************************************** -->
+<!ELEMENT ANNOT (CFG*)>
+
+<!ELEMENT CFG (BB*) (LOOP*)>
+<!ATTLIST CFG name CDATA #REQUIRED>
+
+<!-- Loop annotations -->
+<!ELEMENT LOOP (LOOP*)>
+<!ATTLIST LOOP maxiter NMTOKEN #REQUIRED>
+
+<!-- Basic block annotations -->
+<!-- Address = address of BB, 
+     annotname = annotation name, value = annotation value -->
+<!ELEMENT BB>
+<!ATTLIST BB address NMTOKEN #REQUIRED>
+<!ATTLIST BB annotname CDATA #REQUIRED>
+<!ATTLIST BB value NMTOKEN #REQUIRED>

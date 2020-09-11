@@ -1,0 +1,29 @@
+Contents:
+------------
+
+- Some benchmarks to run Heptane, subset of the Mälardalen WCET Benchmarks,
+  http://www.mrtc.mdh.se/projects/wcet/benchmarks.html
+
+- annot.h  uses to manage specific annotations of Heptane...
+
+- ARMLIB.h contains redefinitions of some functions for ARM. 
+  If the standart library libgcc is used for the linking. At the heptane analysis step, the following abort occurs (for example with the expint axample):
+   | Cfg does not have endnodes, cfg __divsi3 __aeabi_idiv
+   | Going on, ...
+   | HeptaneAnalysis: src/Handle.cc:97: void cfglib::Handle::resolveHandles(): Assertion `id_serialisable.count(currentID)!=0' failed.
+   | Abort (core dumped)
+
+--------------------------------------------------------------------------
+st benchmark
+
+The st.c requires some specific libraries:
+   * libm for ARM and MIPS, 
+   * libc for ARM and MIPS,
+   * and libgcc for ARM.
+
+So the config file must have the informations of the address of these libraries, for example
+   <LINKER NAME="../../CROSS_COMPILERS/MIPS/bin/mips-ld" OPT="-L../../CROSS_COMPILERS/MIPS/mips/lib" SCRIPT="" LIBS= " -lc -lm" />
+
+Currently for ARM the libraries are not added. The entry points are redefined in ../ARMlib.h (see above).
+
+

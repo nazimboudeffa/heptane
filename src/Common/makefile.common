@@ -1,0 +1,41 @@
+
+include ../../makefile.config
+
+COMPILING=$(CXX) $(CXXFLAGS) $(INCLS)
+
+
+all: $(OBJS)
++dirs=$(sort $(dir $(OBJS)))
+
+# generated-doc is the dir defined in the Doxyfile file.
+INDEXDOC=doc/generated-doc/html/index.html
+doc: $(INDEXDOC)
+
+$(OBJS): $(dirs)
+$(dirs):
+	mkdir -p $@
+
+
+
+$(INDEXDOC): $(OBJS)
+	doxygen Doxyfile
+
+include makefile.depends
+
+makefile.depends:
+	echo "COMPILING = $(COMPILING)"
+	echo 'makefile.depends: ' `find . -iname '*.cc'` >makefile.depends 2>/dev/null
+	for i in `find src -iname '*.cc' ` ; do \
+	   filename=`basename $$i .cc` ; \
+	   yyy=obj/$${filename}.o ; \
+	   $(COMPILING) -M -MM -MT$${yyy} $$i >>makefile.depends ; \
+	   echo "	$(COMPILING) -c $$i -o $$yyy " >>makefile.depends ;\
+        done 2>/dev/null
+
+clean:
+	find . -name '*.o' -print0 | xargs -0 $(RM)
+	find . -name '*~'  -print0 | xargs -0 $(RM)
+	$(RM) makefile.depends
+	$(RM) -R doc/generated-doc
+
+force: clean all doc

@@ -1,0 +1,33 @@
+<!DOCTYPE ANNOT SYSTEM "annot.dtd">
+<ANNOT>
+<CFG name="fabs">
+</CFG>
+<CFG name="log">
+</CFG>
+<CFG name="sin">
+  <LOOP maxiter="8">
+  </LOOP>
+</CFG>
+<CFG name="cos">
+</CFG>
+<CFG name="fft1">
+  <LOOP maxiter="4">
+  </LOOP>
+  <LOOP maxiter="4">
+    <LOOP maxiter="4">
+      <LOOP maxiter="4">
+      </LOOP>
+    </LOOP>
+  </LOOP>
+  <LOOP maxiter="7">
+    <LOOP maxiter="2">
+    </LOOP>
+  </LOOP>
+  <LOOP maxiter="8">
+  </LOOP>
+</CFG>
+<CFG name="main">
+  <LOOP maxiter="8">
+  </LOOP>
+</CFG>
+</ANNOT>

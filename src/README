@@ -1,0 +1,25 @@
+Contents:
+---------
+
+HeptaneExtract: CFG extractor (binary file -> xml representation used
+  as an input of the WCET analyzer)
+
+HeptaneAnalysis: WCET estimation tool source code
+
+cfglib: CFG (control flow graph) management library. This library 
+	is heavily used by Heptane to manipulate the program CFGs.
+
+ArchitectureDependent: architecture dependent code
+
+GlobalAttributes: everything shared between the CFG extractor and
+   the WCET analyzer
+
+templates: template configuration files
+   (see the documentation on how to generate configuration files
+   from these templates)
+
+GNUmakefile/makefile.common: to compile everything
+     (see installation procedure in directory doc before)
+
+
+    

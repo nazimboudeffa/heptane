@@ -1,0 +1,98 @@
+<?xml version="1.0"?>
+<!DOCTYPE CONFIGURATION SYSTEM "config.dtd"> 
+
+<CONFIGURATION>
+
+<!-- ******************************************************* -->
+
+<!-- Places to be modified to adap the template to your need -->
+<!-- Mandatory: -->
+<!--    Inputputdir: directory in which all files will be read/written -->
+<!--    input file name for the first analysis (here icache analysis): name of thexml file containing the program to be analyzed -->
+<!--    If data address analysis is applied, name of the benchmark -->
+<!--    If codeline analysis is applied, name of the program binary file -->
+<!--    If htmlprint is applied, absolute name of the html file  -->
+<!-- Optional: -->
+<!--    Architecture description -->
+<!--    List of analyses to be applied and corresponding parameters -->
+
+<!-- ******************************************************* -->
+
+<!-- Where to find the program to analyze and to put analysis results -->
+<INPUTOUTPUTDIR name="BENCH_DIR"/>
+
+<!-- Architecture description -->
+<ARCHITECTURE>
+
+<!-- Target type -->
+<TARGET NAME="MIPS" ENDIANNESS="SELECTED_ENDIANNESS"/>
+
+<!-- Cache -->
+<!-- NB: cache look-up is always considered when calculating the WCET, -->
+<!-- 111 for a all-miss for a 2-level cache hierarchy -->
+<!-- Set type="picache" for a perfect instruction cache, and type="pdcache" for a perfect data cache.
+     In this cases, nbsets, nbways, cachelinesize and replacement policy are irrelevant.  -->
+<CACHE nbsets="32" nbways="2" cachelinesize="32" replacement_policy="LRU" type="icache" level="1" latency="1"/>
+<CACHE nbsets="64" nbways="8" cachelinesize="64" replacement_policy="LRU" type="icache" level="2" latency="10"/>
+<CACHE nbsets="32" nbways="2" cachelinesize="32" replacement_policy="LRU" type="dcache" level="1" latency="1"/>
+<CACHE nbsets="64" nbways="8" cachelinesize="64" replacement_policy="LRU" type="dcache" level="2" latency="10"/>
+<MEMORY load_latency="100" store_latency="100"/>
+
+
+</ARCHITECTURE>
+<!-- List of analysis steps, to be applied sequentially -->
+<!-- output file allows to keep the results of on analysis in a file for debug purposes -->
+<ANALYSIS>
+
+<!-- Build the cfg of the input_file, compute the contexts and set the entry point to be analyzed -->
+<ENTRYPOINT keepresults="on" input_file ="X_BENCH.xml" output_file ="X_BENCH_main.xml" entrypointname="main"/>
+
+<!-- Instruction cache analysis: each of the 3 analysis steps (must/may/persistence) can be turned on/off individually -->
+<ICACHE keepresults="on" input_file ="" output_file ="resICacheL1.xml" level="1" must="on" persistence="on" may="on" />
+<ICACHE keepresults="on" input_file ="" output_file ="resICacheL2.xml" level="2" must="on" persistence="on" may="on" />
+
+<!-- To use data cache analysis, you have to first call analysis DATAADDRESS to attach addresses -->
+<!-- to load/store instructions. This requires that the CFG is extracted with OUTPUTOBJDUMP and OUTPUTREADELF set to true -->
+<!-- Data cache analysis has to be called for each cache level individually -->
+<DATAADDRESS keepresults="on" input_file ="" output_file ="" sp="7FFFE000"/>
+<!-- Data cache analysis: each of the 3 analysis steps (must/may/persistence) can be turned on/off individually -->
+<DCACHE keepresults="on" input_file ="" output_file ="resDCacheL1.xml" level="1" must="on" persistence="on" may="on"/>
+<DCACHE keepresults="on" input_file ="" output_file ="resDCacheL2.xml" level="2" must="on" persistence="on" may="on"/>
+
+<!-- Pipeline analysis -->
+<PIPELINE keepresults="on" input_file ="" output_file ="resPipeline.xml"/>
+
+
+<!-- Final WCET computation.-->
+<IPET keepresults="on" input_file ="" 
+      output_file ="resIPET.xml" 
+      solver = "_SOLVER_"
+      pipeline= "off"
+      attach_WCET_info = "on"
+      generate_node_freq = "on"
+/> 
+
+<!-- Gives cache statistics -->
+<!-- Requires that all cache levels of the architecture have been analyzed -->
+<!-- Also requires that the final WCET computation step has been applied, and that frequencies are kept -->
+<CACHESTATISTICS keepresults="on" input_file ="" output_file ="" />
+
+<!-- To be inserted to generate a text file describing the program's CFG -->
+<SIMPLEPRINT keepresults="on" input_file ="" output_file ="" 
+	     printcallgraph = "off" printloopnest = "off"
+	     printcfg = "off" printWCETinfo = "on"/>
+
+<!-- To be inserted to generate a jpeg file containing the program's CFG -->
+<DOTPRINT keepresults="on" input_file ="" output_file =""/>
+
+<!-- To be inserted to generate an Html file containing the frequency of code lines along the worst-case execution path -->
+<!-- Codeline information is inserted by applying analysis CODELINE, whereas HTMLPRINT generates the html -->
+<!-- CODELINE requires that the program is compiled with -ggdb option -->
+<CODELINE keepresults="on" input_file ="" output_file =""
+	  binaryfile="X_BENCH.exe"  addr2lineCommand="_CROSS_COMPILER_DIR_/bin/mips-addr2line" />
+
+<HTMLPRINT keepresults="on" input_file ="" output_file =""
+	  colorize="on" html_file ="X_BENCH.html"/>
+</ANALYSIS>
+
+</CONFIGURATION>
